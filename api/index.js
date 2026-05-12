@@ -85,7 +85,7 @@ export default async (req, res) => {
 
   try {
     const showStats = parseArray(show);
-    /*const stats = await fetchStats(
+    const stats = await fetchStats(
       username,
       parseBoolean(include_all_commits),
       parseArray(exclude_repo),
@@ -94,7 +94,7 @@ export default async (req, res) => {
       showStats.includes("discussions_started"),
       showStats.includes("discussions_answered"),
       parseInt(commits_year, 10),
-    );*/
+    );
     const cacheSeconds = resolveCacheSeconds({
       requested: parseInt(cache_seconds, 10),
       def: CACHE_TTL.STATS_CARD.DEFAULT,
