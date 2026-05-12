@@ -47,11 +47,11 @@ function calculateRank({
   const COMMITS_MEDIAN = all_commits ? 1000 : 250,
     COMMITS_WEIGHT = 2;
   const PRS_MEDIAN = 50,
-    PRS_WEIGHT = 1;
+    PRS_WEIGHT = 3;
   const ISSUES_MEDIAN = 25,
-    ISSUES_WEIGHT = 0;
+    ISSUES_WEIGHT = 1;
   const REVIEWS_MEDIAN = 2,
-    REVIEWS_WEIGHT = 0;
+    REVIEWS_WEIGHT = 1;
   const STARS_MEDIAN = 50,
     STARS_WEIGHT = 4;
   const FOLLOWERS_MEDIAN = 10,
@@ -66,16 +66,16 @@ function calculateRank({
     FOLLOWERS_WEIGHT;
 
   const THRESHOLDS = [1, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100];
-  const LEVELS = ["S", "S", "S", "S", "S", "S", "S", "S", "S"];
+  const LEVELS = ["S", "A+", "A", "A-", "B+", "B", "B-", "C+", "C"];
 
   const rank =
     1 -
-    (COMMITS_WEIGHT * exponential_cdf(3000 / COMMITS_MEDIAN) +
-      PRS_WEIGHT * exponential_cdf(3000 / PRS_MEDIAN) +
-      ISSUES_WEIGHT * exponential_cdf(3000 / ISSUES_MEDIAN) +
-      REVIEWS_WEIGHT * exponential_cdf(3000 / REVIEWS_MEDIAN) +
-      STARS_WEIGHT * log_normal_cdf(3000 / STARS_MEDIAN) +
-      FOLLOWERS_WEIGHT * log_normal_cdf(3000 / FOLLOWERS_MEDIAN)) /
+    (COMMITS_WEIGHT * exponential_cdf(commits / COMMITS_MEDIAN) +
+      PRS_WEIGHT * exponential_cdf(prs / PRS_MEDIAN) +
+      ISSUES_WEIGHT * exponential_cdf(issues / ISSUES_MEDIAN) +
+      REVIEWS_WEIGHT * exponential_cdf(reviews / REVIEWS_MEDIAN) +
+      STARS_WEIGHT * log_normal_cdf(stars / STARS_MEDIAN) +
+      FOLLOWERS_WEIGHT * log_normal_cdf(followers / FOLLOWERS_MEDIAN)) /
       TOTAL_WEIGHT;
 
   const level = LEVELS[THRESHOLDS.findIndex((t) => rank * 100 <= t)];
