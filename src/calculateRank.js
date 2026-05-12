@@ -70,7 +70,7 @@ function calculateRank({
 
   const rank =
     1 -
-    (COMMITS_WEIGHT * exponential_cdf(all_commits / COMMITS_MEDIAN) +
+    (COMMITS_WEIGHT * exponential_cdf(commits / COMMITS_MEDIAN) +
       PRS_WEIGHT * exponential_cdf(prs / PRS_MEDIAN) +
       ISSUES_WEIGHT * exponential_cdf(issues / ISSUES_MEDIAN) +
       REVIEWS_WEIGHT * exponential_cdf(reviews / REVIEWS_MEDIAN) +
